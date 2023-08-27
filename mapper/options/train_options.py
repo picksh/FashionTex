@@ -3,9 +3,9 @@ import os
 from argparse import Action, ArgumentParser
 from email.quoprimime import header_check
 
-WEIGHT_DIR=" "
-DATA_DIR=" "
-Texture_ref_DIR=" "
+WEIGHT_DIR="../pretrained "
+DATA_DIR="../data"
+Texture_ref_DIR="../data_texture"
 
 class TrainOptions:
 
@@ -37,7 +37,6 @@ class TrainOptions:
 		self.parser.add_argument('--background_lambda', default=1.0, type=float, help='Background loss multiplier factor')
 		self.parser.add_argument('--latent_l2_lambda', default=0.8, type=float, help='Latent L2 loss multiplier factor')
 
-		self.parser.add_argument('--parsenet_weights', default=os.path.join(WEIGHT_DIR,'parsenet.pth'), type=str, help='Path to Parsing model weights')
 		self.parser.add_argument('--stylegan_weights', default=os.path.join(WEIGHT_DIR,'stylegan_human_v2_1024.pth'), type=str, help='Path to StyleGAN model weights')
 		self.parser.add_argument('--stylegan_size', default=1024, type=int)
 		self.parser.add_argument('--ir_se50_weights', default=os.path.join(WEIGHT_DIR,'model_ir_se50.pth'), type=str, help="Path to facial recognition network used in ID loss")
