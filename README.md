@@ -32,6 +32,10 @@ Default path for pretrained weights is ./pretrained. You can change the path in 
 
 ## Prepare data
 
+In this project, we use [DeepFashion-MultiModal](https://github.com/yumingj/DeepFashion-MultiModal) dataset. We use [e4e](https://github.com/omertov/encoder4editing) to invert images into latent space.
+
+
+
 
 ## Acknowledgements
 
