@@ -33,9 +33,18 @@ Default path for pretrained weights is ./pretrained. You can change the path in 
 ## Prepare data
 
 In this project, we use [DeepFashion-MultiModal](https://github.com/yumingj/DeepFashion-MultiModal) dataset. We use [e4e](https://github.com/omertov/encoder4editing) to invert images into latent space.
-
-
-
+1. Download [DeepFashion-MultiModal](https://github.com/yumingj/DeepFashion-MultiModal) dataset.
+2. In order to use the pre-trained StyleGAN-Human model, we should align images with [Aligned raw images](https://github.com/stylegan-human/StyleGAN-Human/tree/main#aligned-raw-images). Put the aligned images in data/data_split/aligned.
+3. Invert aligned images: The simplest way is to follow [Invert real image with PTI](https://github.com/stylegan-human/StyleGAN-Human/tree/main#invert-real-image-with-pti) and we only need the output embedding "0.pt" in  'outputs/pti/'. (Since we only need the output of e4e, you can comment out the finetuning code to save time.）
+4. Run the data processing script:
+```bash 
+bash data/process.sh
+```
+## Training
+You can set the GPU number in run.sh. If you would like to change the data, weights, output path or other settings, you can find them in mapper/options/train_options.py.
+```
+bash run.sh
+```
 
 ## Acknowledgements
 
