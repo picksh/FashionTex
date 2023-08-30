@@ -15,8 +15,8 @@ from torch.utils.data import DataLoader
 ABC_type={
 	'A':['dress','romper','jumpsuit'],
     'B':['top','shirt'],
-    'C':['pants','skirt','skirt','skirt','joggers'],
-    'one':["long sleeve","long sleeve","short sleeve","sleeveless","tank","camisole","no"],
+    'C':['pants','skirt','joggers'],
+    'one':["long sleeve","short sleeve","sleeveless","tank","camisole","no"],
     'two':["round-neck","v-neck","collared","polo","no"],
 }
 
