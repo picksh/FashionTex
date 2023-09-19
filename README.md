@@ -26,7 +26,7 @@ pip install git+https://github.com/openai/CLIP.git
 3. Install required packages for [DenseCLIP](https://github.com/raoyongming/DenseCLIP).
 4. Download Pretrained StyleGAN-Human weight(stylegan_human_v2_1024.pkl) from  https://github.com/stylegan-human/StyleGAN-Human
 5. Download Pretrained [IR-SE50](https://drive.google.com/file/d/1FS2V756j-4kWduGxfir55cMni5mZvBTv/view) model taken from [TreB1eN](https://github.com/TreB1eN/InsightFace_Pytorch) for use in our ID loss during training.
-6. Download Pretrained [DenseCLIP]() weight.
+6. Download Pretrained [DenseCLIP](https://drive.google.com/file/d/1cHpWEC49qNhYAQRVrV8Ex1PJYIIB84TO/view?usp=sharing) weight.
 
 Default path for pretrained weights is ./pretrained. You can change the path in mapper/options/train_options.py
 
