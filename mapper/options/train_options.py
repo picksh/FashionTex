@@ -64,15 +64,13 @@ class TrainOptions:
 		self.parser.add_argument("--data_test",type=str, default=os.path.join(DATA_DIR,"data_split/deepfashionmm_test.pkl"))
 		self.parser.add_argument("--cliploss_type",type=str,default="new_cliploss",help=['clip,seg_clip,new_cliploss,classification_cliploss'])
 
-		self.parser.add_argument("--real",action="store_false")
 		self.parser.add_argument("--change_type",action="store_false")
 		self.parser.add_argument("--texture_ref",type=str,default='')
 		self.parser.add_argument("--change_type_all",action="store_false")
-		self.parser.add_argument("--two_typemapper",action="store_false")
 
 		self.parser.add_argument("--fast_dev_run",action="store_true")
 		self.parser.add_argument("--ABC_type",action="store_false")
-		self.parser.add_argument("--real_imgs_dir",type=str,default=os.path.join(DATA_DIR,'data_split/aligned'))
+		self.parser.add_argument("--real_imgs_dir",type=str,default=os.path.join(DATA_DIR,'data_split'))
 		self.parser.add_argument("--seg_model_path",default=os.path.join(WEIGHT_DIR,'iter_80000.pth'))
 
 		self.parser.add_argument("--test",action="store_true")

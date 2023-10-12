@@ -124,12 +124,8 @@ class LatentsDataset(Dataset):
 		else:
 			image_name=self.data_list[index].split('.')[0]
 		
-		if (self.opts.real or self.opts.use_PTI) and self.opts.two_colormapper:
-			image_file=os.path.join(self.opts.real_imgs_dir,'aligned_{}'.format(self.status),'{}.png'.format(image_name))
-		else:
-			image_file=os.path.join(self.opts.stylehuman_imgs_dir,image_name)
-
-		#image_file=os.path.join(self.opts.stylehuman_imgs_dir,self.data_list[index])
+		image_file=os.path.join(self.opts.real_imgs_dir,'aligned_{}'.format(self.status),'{}.png'.format(image_name))
+		
 		img = self.image_transform(Image.open(image_file)) 
 		#print(img.shape)
 		crop_gen=self.crop_image(img.permute(1,2,0),64,part=part)#64 64 3
@@ -165,16 +161,16 @@ class LatentsDataset(Dataset):
 				color_tensor2=self.choose_ref_texture(index,part="lower",choose_imagename=choose_textures[1])
 
 		else:
-			if self.opts.two_colormapper:
-				if random.random()<0.2:
-					color_tensor1=self.choose_self_texture(index,part="upper")
-				else:
-					color_tensor1=self.choose_ref_texture(index)
+			
+			if random.random()<0.2:
+				color_tensor1=self.choose_self_texture(index,part="upper")
+			else:
+				color_tensor1=self.choose_ref_texture(index)
 
-				if random.random()<0.2:
-					color_tensor2=self.choose_self_texture(index,part="lower")
-				else:
-					color_tensor2=self.choose_ref_texture(index,part="lower")
+			if random.random()<0.2:
+				color_tensor2=self.choose_self_texture(index,part="lower")
+			else:
+				color_tensor2=self.choose_ref_texture(index,part="lower")
 			
 		return color_tensor1, color_tensor2
 	
