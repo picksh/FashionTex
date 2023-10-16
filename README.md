@@ -88,6 +88,7 @@ The 'test_data_list' is default as a JSON file with the following format:
     }
 ]
 ```
+An example is in 'data/test_data/test_example.json'. 
 
 ## ID Recovery Module
 First set the data path in 'recovery_module/pti/pti_configs/paths_config.py'. 

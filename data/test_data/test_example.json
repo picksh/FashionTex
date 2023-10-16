@@ -1,0 +1,34 @@
+[
+    {
+        "img": "WOMEN-Blouses_Shirts-id_00007684-09_4_full",
+        "text":[
+            [
+                "tank dress",
+                "short dress"
+            ],
+            [
+                "tank short dress"
+            ]
+        ],
+        "texture":[
+            "WOMEN-Blouses_Shirts-id_00002363-01_4_full.jpg",
+            "WOMEN-Blouses_Shirts-id_00002336-04_1_front.jpg"
+        ]
+
+    },
+    {
+        "img": "WOMEN-Blouses_Shirts-id_00007684-09_4_full",
+        "text":[
+            "",
+            [
+                "short shirt",
+                "shorts"
+            ]
+        ],
+        "texture":[
+            "WOMEN-Blouses_Shirts-id_00002363-01_4_full.jpg",
+            "WOMEN-Blouses_Shirts-id_00002336-04_1_front.jpg"
+        ]
+
+    }
+]
