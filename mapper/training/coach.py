@@ -54,7 +54,7 @@ class Coach(pl.LightningModule):
 
 	def _shared_eval(self, batch, batch_idx, prefix):
 		
-		w,  type_text_emb_up, type_text_emb_low, selected_description, color_tensor_up,color_tensor_low, target_type, image_label=batch
+		w,  type_text_emb_up, type_text_emb_low, selected_description, color_tensor_up,color_tensor_low, target_type, image_label= batch
 		with torch.no_grad():
 			x, _ = self.net.decoder([w], input_is_latent=True, randomize_noise=False, truncation=1)
 		x_hat, w_hat=self(w, type_text_emb_up, color_tensor_up, color_tensor_low, type_text_emb_low)
@@ -96,12 +96,14 @@ class Coach(pl.LightningModule):
 		return loss
 
 	def test_step(self, batch, batch_idx):
+		x,x_hat,color_tensor_up,color_tensor_low,selected_description, image_name, w_hat=self._shared_eval(batch, batch_idx, prefix='test')
+		#x,x_hat,color_tensor,color_tensor2,selected_description, image_name, w_hat=self._shared_eval(batch, batch_idx, prefix='test')
+		# Only save final results
+		self.log_image(x_hat, image_name, selected_description, title='images_test/img')
+		# Use self.parse_and_log_images to save original img, output, and ref textrues.
 		
-		x,x_hat,color_tensor,color_tensor2,selected_description, image_name, w_hat=self._shared_eval(batch, batch_idx, prefix='test')
-		self.log_image(x_hat, image_name, title='images_test/img')
-
-	def test_epoch_end(self,batch, batch_idx):
-		print('end')
+		# Save w_hat for recovery module
+		self.log_w(w_hat, image_name, selected_description, title='images_test/w')
 
 	def configure_optimizers(self):	
 		
@@ -181,12 +183,22 @@ class Coach(pl.LightningModule):
 		color_tensor_pad=(int((x.shape[3]-img_tensor.shape[3])/2),int((x.shape[3]-img_tensor.shape[3])/2),int((x.shape[2]-img_tensor.shape[2])/2),int((x.shape[2]-img_tensor.shape[2])/2))
 		torchvision.utils.save_image(torch.cat([x, x_hat, F.pad(img_tensor,pad=color_tensor_pad),F.pad(img_tensor2,pad=color_tensor_pad)]), path,
 								     normalize=True, scale_each=True, range=(-1, 1), nrow=4)
-
-	def log_image(self,x_hat,image_name,title):
-		path=os.path.join(self.log_dir,title, f'{image_name[0]}.jpg')
+	# TODO: May Need modify according to different output
+	def log_image(self,x_hat,image_name,des, title):
+		image_name=image_name[0].split('.')[0]
+		des=des[0]
+		path=os.path.join(self.log_dir,title, f'{image_name}+{des}.jpg')
 		os.makedirs(os.path.dirname(path), exist_ok=True)
 		torchvision.utils.save_image(torch.cat([x_hat.detach().cpu()]),path,normalize=True, scale_each=True, range=(-1, 1))
-	
+	# TODO: May Need modify according to different output
+	def log_w(self, w, image_name, des, title):
+		image_name=image_name[0].split('.')[0]
+		des=des[0]
+		path=os.path.join(self.log_dir,title, f'{image_name}+{des}.npy')
+		os.makedirs(os.path.dirname(path), exist_ok=True)
+		np.save(path, w.cpu().numpy())
+
+		
 	def log_loss(self, loss_dict):
 		with open(os.path.join(self.log_dir, 'timestamp.txt'), 'a') as f:
 			f.write('Step - {}, \n{}\n'.format(self.global_step, loss_dict))

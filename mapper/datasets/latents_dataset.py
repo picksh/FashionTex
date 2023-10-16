@@ -50,9 +50,6 @@ class LatentsDataset(Dataset):
 		if self.opts.test:
 			with open(self.opts.test_data_list,"r") as f:
 				self.test_data_list=json.load(f)
-			with open(self.opts.test_data_text,"r") as f:
-				self.test_data_text=json.load(f)
-			with open(self.opts.test_data_texture,"r") as f:
 	
 	def change_type_ABC(self):
 		if np.random.random()<0.3:
@@ -90,7 +87,7 @@ class LatentsDataset(Dataset):
 
 		
 		if self.opts.test:
-			image_name=self.test_data_list[index].split('+')[0]
+			image_name=self.test_data_list[index]['img']
 		else:
 			image_name=self.data_list[index].split('.')[0]
 		
@@ -100,11 +97,7 @@ class LatentsDataset(Dataset):
 		
 		# choose target type
 		if self.opts.test:
-			if len(self.test_data_list[index].split('+'))==1:
-				one_piece_parts,target_type=self.test_data_text[image_name]
-			else:
-				text_id=int(self.test_data_list[index].split('+')[1])
-				one_piece_parts,target_type=self.test_data_text[image_name][text_id]
+			one_piece_parts,target_type=self.test_data_list[index]['text']
 		else:
 			one_piece_parts,target_type=self.change_type_ABC()
 		
@@ -120,7 +113,7 @@ class LatentsDataset(Dataset):
 
 	def choose_self_texture(self,index,part="upper"):
 		if self.opts.test:
-			image_name=self.test_data_list[index].split('+')[0]
+			image_name=self.test_data_list[index]['img']
 		else:
 			image_name=self.data_list[index].split('.')[0]
 		
@@ -143,13 +136,9 @@ class LatentsDataset(Dataset):
 	def manipulater_color(self, index):
 		
 		if self.opts.test:
-			if self.opts.no_fine_mapper:
-				choose_textures=("self","self")
-			else:
-				image_name=self.test_data_list[index].split('+')[0]
-				text_id=int(self.test_data_list[index].split('+')[1])
-				choose_textures=self.test_data_texture[image_name][text_id]
-			
+			image_name=self.test_data_list[index]['img']
+			choose_textures=self.test_data_list[index]['texture']
+
 			if choose_textures[0]=='self':
 				color_tensor1=self.choose_self_texture(index,part="upper")
 			else:
@@ -188,7 +177,7 @@ class LatentsDataset(Dataset):
 			color_tensor_low=color_tensor_up
 
 		if self.opts.test:
-			return latent, type_text_emb_up, type_text_emb_low,selected_description, color_tensor_up,color_tensor_low, target_type, self.test_data_list[index]
+			return latent, type_text_emb_up, type_text_emb_low,selected_description, color_tensor_up,color_tensor_low, target_type, self.test_data_list[index]["img"]
 
 		
 		return latent, type_text_emb_up, type_text_emb_low,selected_description, color_tensor_up,color_tensor_low, target_type, ori_type

@@ -8,8 +8,6 @@ from mmseg.models import builder
 from mmseg.models.builder import SEGMENTORS
 from mmseg.models.segmentors.base import BaseSegmentor
 import sys,os
-#sys.path.append('/data_sobig/anran/fashionedit/criteria/human_parse/denseclip')
-#print(os.getcwd())
 sys.path.append('../criteria/human_parse/denseclip')
 from untils import tokenize
 from models import *
@@ -393,19 +391,3 @@ class DenseCLIP(BaseSegmentor):
         seg_pred = seg_pred.cpu().numpy()
         seg_pred = list(seg_pred)
         return seg_pred
-
-if __name__=='__main__':
-    #from mmcv.utils import Config
-    import sys
-    sys.path.append('/data_sobig/anran/HairCLIP/criteria/human_parse')
-    from configs.denseclip_fpn_vit_b_640x640_80k import CONF,data_meta
-    filepath='/data_sobig/anran/HairCLIP/criteria/human_parse/pretrained/iter_80000.pth'
-    
-    model=DenseCLIP(**CONF)
-    model.load_state_dict(torch.load(filepath)['state_dict'])
-    model=model.cuda()
-    model.eval()
-    #model=MMDataParallel(model, device_ids=[0])
-    img=torch.rand((1,3,1024,512)).cuda()
-    out=model.simple_test(img,data_meta)
-    print(out[0].max()) #64 64

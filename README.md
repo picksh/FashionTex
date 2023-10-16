@@ -6,8 +6,8 @@ The official implementation of SIGGRAPH 2023 conference paper, FashionTex: Contr
 
 - [x] Training Code
 - [ ] Data Processing Script
-- [ ] Test Code
-- [ ] ID Recovery Module
+- [x] Test Code
+- [x] ID Recovery Module
 
 ## Requirement
 1. Create a conda virtual environment and activate it:
@@ -45,6 +45,55 @@ bash data/process.sh
 You can set the GPU number in run.sh. If you would like to change the data, weights, output path or other settings, you can find them in mapper/options/train_options.py.
 ```
 bash run.sh
+```
+## Test
+First set the 'checkpoint_path','test_data_list', 'test_img_dir' and 'test_texture_dir' in test.sh file. Then run the test script:
+```
+bash test.sh
+```
+The 'test_data_list' is default as a JSON file with the following format:
+```
+[
+    # For clothes with upper and lower parts
+    {
+        "img": "image_name",
+        "text":[
+            "",
+            [
+                "target_upper_cloth_type", # e.g. "shirt",
+                "target_lower_cloth_type"  # e.g. "pants"
+            ]
+        ],
+        "texture":[
+            "ref_texture_for_upper_cloth.jpg",
+            "ref_texture_for_lower_cloth.jpg"
+        ]
+    },
+    # For dress/rompers/...
+    {
+        "img": "image_name",
+        "text":[
+            [
+                "target_upper_type", # e.g. "tank dress",
+                "target_lower_type"  # e.g. "short dress"
+            ],
+            [
+                "completed_target_type" # e.g. "tank short dress"
+            ]
+        ],
+        "texture":[
+            "ref_texture_for_upper_cloth.jpg",
+            "ref_texture_for_lower_cloth.jpg"
+        ]
+    }
+]
+```
+
+## ID Recovery Module
+First set the data path in 'recovery_module/pti/pti_configs/paths_config.py'. 
+```
+cd recovery_module
+python run_pti.py
 ```
 
 ## Acknowledgements

@@ -1,8 +1,5 @@
-from os import access
 import os
-from argparse import Action, ArgumentParser
-from email.quoprimime import header_check
-
+from argparse import ArgumentParser
 WEIGHT_DIR="../pretrained "
 DATA_DIR="../data"
 Texture_ref_DIR="../data_texture"
@@ -48,34 +45,33 @@ class TrainOptions:
 		self.parser.add_argument('--val_interval', default=2000, type=int, help='Validation interval')
 		self.parser.add_argument('--save_interval', default=2000, type=int, help='Model checkpoint interval')
 
-		#For texture edit
-		self.parser.add_argument("--texture_img_dir",required=True, type=str, default=os.path.join(DATA_DIR, "texture_64"))
-		self.parser.add_argument("--perceptual_lambda",default=1.0,type=float)
-		self.parser.add_argument("--skin_lambda",default=1.0,type=float)
-		self.parser.add_argument("--seg_model",default='clip',type=str,help='choose from "clip" and "SCHP"')
-		self.parser.add_argument("--log_train_seg",action='store_true')
-		self.parser.add_argument("--description",type=str)
-		self.parser.add_argument("--texture_loss_type",type=str,default='lpip',help='lpip,clip')
-
-		# For type Edit
 		self.parser.add_argument("--img_latent_label_train",type=str,default=os.path.join(DATA_DIR,"data_split/emb_label_train_final.pkl"))
 		self.parser.add_argument("--img_latent_label_test",type=str, default=os.path.join(DATA_DIR,"data_split/emb_label_test_final.pkl"))
 		self.parser.add_argument("--data_train",type=str, default=os.path.join(DATA_DIR,"data_split/deepfashionmm_train.pkl"))
 		self.parser.add_argument("--data_test",type=str, default=os.path.join(DATA_DIR,"data_split/deepfashionmm_test.pkl"))
+		self.parser.add_argument("--real_imgs_dir",type=str,default=os.path.join(DATA_DIR,'data_split/aligned'))
+
+		self.parser.add_argument("--seg_model",default='clip',type=str,help='choose from "clip" and "SCHP"')
+		self.parser.add_argument("--seg_model_path",default=os.path.join(WEIGHT_DIR,'iter_80000.pth'))
+		self.parser.add_argument("--description",type=str)
+		self.parser.add_argument("--log_train_seg",action='store_true')
+		self.parser.add_argument("--skin_lambda",default=1.0,type=float)
+		self.parser.add_argument("--fast_dev_run",action="store_true")
+		self.parser.add_argument("--resume_training",action="store_true")
+
+		#For texture edit
+		self.parser.add_argument("--texture_img_dir", type=str, default=os.path.join(DATA_DIR, "texture_64"))
+		self.parser.add_argument("--perceptual_lambda",default=1.0,type=float)
+		self.parser.add_argument("--texture_loss_type",type=str,default='lpip',help='lpip,clip')
+
+		# For type Edit
 		self.parser.add_argument("--cliploss_type",type=str,default="new_cliploss",help=['clip,seg_clip,new_cliploss,classification_cliploss'])
 
-		self.parser.add_argument("--change_type",action="store_false")
-		self.parser.add_argument("--texture_ref",type=str,default='')
-		self.parser.add_argument("--change_type_all",action="store_false")
-
-		self.parser.add_argument("--fast_dev_run",action="store_true")
-		self.parser.add_argument("--ABC_type",action="store_false")
-		self.parser.add_argument("--real_imgs_dir",type=str,default=os.path.join(DATA_DIR,'data_split'))
-		self.parser.add_argument("--seg_model_path",default=os.path.join(WEIGHT_DIR,'iter_80000.pth'))
-
+		# For test 
 		self.parser.add_argument("--test",action="store_true")
-		self.parser.add_argument("--single_type",action="store_true")
-		self.parser.add_argument("--resume_training",action="store_true")
+		self.parser.add_argument("--test_data_list", type=str)
+		self.parser.add_argument("--test_img_dir", type=str)
+		self.parser.add_argument("--test_texture_dir", type=str)
 
 	def parse(self):
 		opts = self.parser.parse_args()

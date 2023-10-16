@@ -1,5 +1,5 @@
 cd mapper
-CUDA_VISIBLE_DEVICES=2,3 python scripts/train.py \
+CUDA_VISIBLE_DEVICES=0,1 python scripts/train.py \
 --exp_name="released_version" \
 --description="released_version" \
 --text_manipulation_lambda=80 \

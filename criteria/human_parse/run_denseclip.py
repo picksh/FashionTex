@@ -34,14 +34,14 @@ def get_palette(num_cls):
 
 img_trans=transforms.Compose([transforms.ToTensor(),transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])])
 
-cpk_file='/data_sobig/anran/DenseCLIP/segmentation/work_dirs/denseclip_fpn_vit-b_640x640_80k/iter_80000.pth'
+cpk_file=''
 
 model=DenseCLIP(**CONF)
 model.load_state_dict(torch.load(cpk_file)['state_dict'])
 model.cuda()
 model.eval()
-img_path='/data_sobig/anran/deepfashionmm/edit_w_image_test'
-save_dir='/data_sobig/anran/deepfashionmm/edit_w_seg'
+img_path=''
+save_dir=''
 image_list=os.listdir(img_path)
 image_list=[x for x in image_list if ".png" in x and 'alpha' not in x]
 
@@ -54,11 +54,7 @@ for img_name in image_list:
     #img=torch.from_numpy(img).unsqueeze(0).permute(0,3,1,2).float().cuda()
     with torch.no_grad():
         seg_result_x=model.simple_test(img,data_meta)
-    #print(seg_result_x[0].max())
-    #print(seg_result_x[0].min())
-    #print(max(seg_result_x))
-    #print(min(seg_result_x))
-    #print(np.array(seg_result_x).shape)
+   
     np.save(os.path.join(save_dir,'{}.npy'.format(img_name.split('.')[0])),seg_result_x[0])
     s=Image.fromarray(np.asarray(seg_result_x[0], dtype=np.uint8))
     s.putpalette(paletee)
