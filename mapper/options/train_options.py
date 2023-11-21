@@ -16,9 +16,7 @@ class TrainOptions:
 		self.parser.add_argument('--no_medium_mapper', default=False, action="store_true")
 		self.parser.add_argument('--no_fine_mapper', default=False, action="store_true")
 		self.parser.add_argument("--output_dir",type=str,default="outputs")
-		self.parser.add_argument('--color_ref_img_train_path', default=os.path.join(Texture_ref_DIR,"texture_img_train.pkl"), type=str)
-		self.parser.add_argument('--color_ref_img_test_path', default=os.path.join(Texture_ref_DIR,"rechoose_test_texture.pkl"), type=str)
-
+		
 		self.parser.add_argument('--batch_size', default=1, type=int, help='Batch size for training')
 		self.parser.add_argument('--test_batch_size', default=1, type=int, help='Batch size for testing and inference')
 		self.parser.add_argument('--workers', default=4, type=int, help='Number of train dataloader workers')
@@ -50,6 +48,8 @@ class TrainOptions:
 		self.parser.add_argument("--data_train",type=str, default=os.path.join(DATA_DIR,"data_split/deepfashionmm_train.pkl"))
 		self.parser.add_argument("--data_test",type=str, default=os.path.join(DATA_DIR,"data_split/deepfashionmm_test.pkl"))
 		self.parser.add_argument("--real_imgs_dir",type=str,default=os.path.join(DATA_DIR,'data_split/aligned'))
+		self.parser.add_argument('--color_ref_img_train_path', default=os.path.join(Texture_ref_DIR,"texture_img_train.pkl"), type=str)
+		self.parser.add_argument('--color_ref_img_test_path', default=os.path.join(Texture_ref_DIR,"texture_img_test.pkl"), type=str)
 
 		self.parser.add_argument("--seg_model",default='clip',type=str,help='choose from "clip" and "SCHP"')
 		self.parser.add_argument("--seg_model_path",default=os.path.join(WEIGHT_DIR,'iter_80000.pth'))
