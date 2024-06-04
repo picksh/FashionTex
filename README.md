@@ -5,7 +5,7 @@ The official implementation of SIGGRAPH 2023 conference paper, FashionTex: Contr
 ## TODO:
 
 - [x] Training Code
-- [ ] Data Processing Script
+- [x] Processed data
 - [x] Test Code
 - [x] ID Recovery Module
 
