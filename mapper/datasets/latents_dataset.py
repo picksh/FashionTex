@@ -89,7 +89,7 @@ class LatentsDataset(Dataset):
 		if self.opts.test:
 			image_name=self.test_data_list[index]['img']
 		else:
-			image_name=self.data_list[index].split('.')[0]
+			image_name=self.data_list[index]
 		
 		latent=torch.from_numpy(self.latent_labels[image_name]['latent'])
 		
@@ -115,7 +115,7 @@ class LatentsDataset(Dataset):
 		if self.opts.test:
 			image_name=self.test_data_list[index]['img']
 		else:
-			image_name=self.data_list[index].split('.')[0]
+			image_name=self.data_list[index]
 		
 		image_file=os.path.join(self.opts.real_imgs_dir,'aligned_{}'.format(self.status),'{}.png'.format(image_name))
 		
