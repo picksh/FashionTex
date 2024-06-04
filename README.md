@@ -38,8 +38,9 @@ In this project, we use [DeepFashion-MultiModal](https://github.com/yumingj/Deep
 2. In order to use the pre-trained StyleGAN-Human model, we should align images with [Aligned raw images](https://github.com/stylegan-human/StyleGAN-Human/tree/main#aligned-raw-images). Put the aligned images in data/data_split/aligned.
 
 In case you want to prepare your own data, here is an example. Otherwise, the previously downloaded data can be used directly.
-3. Invert aligned images: The simplest way is to follow [Invert real image with PTI](https://github.com/stylegan-human/StyleGAN-Human/tree/main#invert-real-image-with-pti) and we only need the output embedding "0.pt" in  'outputs/pti/'. (Since we only need the output of e4e, you can comment out the finetuning code to save time.）
-4. Then you can use a script to gather the processed data for your training. 
+
+1. Invert aligned images: The simplest way is to follow [Invert real image with PTI](https://github.com/stylegan-human/StyleGAN-Human/tree/main#invert-real-image-with-pti) and we only need the output embedding "0.pt" in  'outputs/pti/'. (Since we only need the output of e4e, you can comment out the finetuning code to save time.）
+2. Then you can use a script to gather the processed data for your training. 
    
 
 ## Training
